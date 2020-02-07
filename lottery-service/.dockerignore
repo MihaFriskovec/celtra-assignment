@@ -1,3 +1,5 @@
 **/*.dbmdl
 **/*.jfm
+.DS_Store
+
 node_modules/
