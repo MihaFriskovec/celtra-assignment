@@ -1,13 +1,15 @@
 const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema
+const { Schema } = mongoose
 
 const latestWinnersSchema = new Schema(
   {
-    userNames: [],
+    users: [],
     winningNumber: Number
   },
   {
     timestamps: true
   }
 )
+
+module.exports = latestWinnersSchema
