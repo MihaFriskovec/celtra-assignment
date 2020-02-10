@@ -3,8 +3,7 @@ const logger = require('pino')()
 const lotteris = require('./lotteries')
 const drawNumber = require('./draw-number')
 const submission = require('./submission')
-
-const History = require('../models/history')
+const history = require('./history')
 
 /**
  * Pick winner for each active lottery and save result to histroy collection.
@@ -35,17 +34,7 @@ const pickWinner = async () => {
       lotteryNumber
     }
 
-    const history = new History(historyData)
-
-    try {
-      const result = await history.save()
-
-      logger.info(
-        `Results for lottery ${lotteryName}: ${JSON.stringify(result)}`
-      )
-    } catch (e) {
-      logger.error(`Error picking winner ${e.message}`)
-    }
+    await history.setLatestWinners(historyData)
   }
 
   return 'done'

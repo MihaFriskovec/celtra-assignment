@@ -33,4 +33,23 @@ const getLatestWinners = async lotteryName => {
   }
 }
 
-module.exports = getLatestWinners
+/**
+ * Save history data to collection
+ * @param {Object} data - Data to be saved in history collection
+ * @returns {Object} - Saved history data
+ */
+const setLatestWinners = async data => {
+  const history = new History(data)
+
+  try {
+    const result = await history.save()
+
+    return result
+  } catch (e) {
+    logger.error(`Error saving historz ${e.message}`)
+
+    throw new Error('Error saving history')
+  }
+}
+
+module.exports = { getLatestWinners, setLatestWinners }
