@@ -14,12 +14,14 @@ const options = {
  */
 const getWinningNumber = async () => {
   try {
-    logger.info(`Getting new winning number with options: ${options}`)
+    logger.info(
+      `Getting new winning number with options: ${JSON.stringify(options)}`
+    )
     const response = await request.get(options)
 
     const winningNumber = JSON.parse(response)
 
-    logger.info(`Winning number: ${winningNumber}`)
+    logger.info(`Winning number: ${JSON.stringify(winningNumber)}`)
 
     return winningNumber
   } catch (e) {

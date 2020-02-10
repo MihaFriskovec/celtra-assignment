@@ -2,15 +2,14 @@ const mongoose = require('mongoose')
 
 const { Schema } = mongoose
 
-const lotterySchema = new Schema(
+const LotterySchema = new Schema(
   {
     name: {
       type: String,
       required: true
     },
     active: {
-      type: Boolean,
-      default: true
+      type: Boolean
     }
   },
   {
@@ -18,4 +17,4 @@ const lotterySchema = new Schema(
   }
 )
 
-mongoose.model('Lottery', lotterySchema)
+module.exports = mongoose.model('Lottery', LotterySchema)

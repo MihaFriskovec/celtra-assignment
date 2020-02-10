@@ -1,33 +1,54 @@
+const logger = require('pino')()
+
 const lotteris = require('./lotteries')
 const drawNumber = require('./draw-number')
-const mongoose = require('mongoose')
+const submission = require('./submission')
 
-const LatestWinners = mongoose.model('LatestWinners')
+const History = require('../models/history')
 
+/**
+ * Pick winner for each active lottery and save result to histroy collection.
+ */
 const pickWinner = async () => {
   const lotteryApiResult = await drawNumber()
-  const activeLotteries = lotteris.getLotteries()
+  const activeLotteries = await lotteris.getActiveLotteries()
 
   const { lotteryNumber } = lotteryApiResult
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [key, value] of activeLotteries.entries()) {
-    const winners = value
-      .filter(entry => entry.number === lotteryNumber)
-      .map(users => users.user)
+  for (const activeLottery of activeLotteries) {
+    logger.info(`Active lottery ${JSON.stringify(activeLottery)}`)
+    const { lotteryName } = activeLottery
 
-    value.splice(0, value.length)
+    const users = await submission.getSubmission(lotteryName)
+    await submission.clearSubmission(lotteryName)
 
-    const winner = {
-      lotteryName: key,
+    logger.info(`Users submited ${users}`)
+    const winners = users
+      .filter(entry => JSON.parse(entry).number === lotteryNumber)
+      .map(user => JSON.parse(user).user)
+
+    logger.info(`Winners ${winners}`)
+
+    const historyData = {
+      lotteryName,
       winners,
-      winningNumber: lotteryNumber
+      lotteryNumber
     }
 
-    const doc = new LatestWinners(winner)
+    const history = new History(historyData)
 
-    doc.save()
+    try {
+      const result = await history.save()
+
+      logger.info(
+        `Results for lottery ${lotteryName}: ${JSON.stringify(result)}`
+      )
+    } catch (e) {
+      logger.error(`Error picking winner ${e.message}`)
+    }
   }
+
+  return 'done'
 }
 
 module.exports = pickWinner

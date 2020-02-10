@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const logger = require('pino')()
 
-const Lottery = mongoose.model('Lottery')
+const Lottery = require('../models/lotteries')
 
 /**
  * Register new lottery. Save lottery to DB
@@ -10,10 +10,12 @@ const Lottery = mongoose.model('Lottery')
  * @throws Throws error if there is a problem with databse
  */
 const addLoterry = async lotteryName => {
-  const lottery = new Lottery(lotteryName)
-
   try {
-    const savedLottery = await lottery.save()
+    const savedLottery = await Lottery.findOneAndUpdate(
+      { name: lotteryName },
+      { name: lotteryName, active: true },
+      { upsert: true, new: true }
+    )
 
     return savedLottery
   } catch (e) {
@@ -48,6 +50,13 @@ const getActiveLotteries = async () => {
 const getLottery = async lotteryName => {
   try {
     const lottery = await Lottery.findOne({ name: lotteryName })
+
+    if (lottery === null) {
+      logger.error(
+        `Error getting lottery - Lottery with given name does not exists ${lotteryName}`
+      )
+      throw new Error('Lottery with given name does not exists')
+    }
 
     return lottery
   } catch (e) {

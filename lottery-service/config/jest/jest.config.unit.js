@@ -1,4 +1,5 @@
 module.exports = {
   testRegex: '__tests__/unit/*/.*.test.js',
-  rootDir: '../../'
+  rootDir: '../../',
+  testEnvironment: 'node'
 }

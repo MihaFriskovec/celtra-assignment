@@ -1,8 +1,9 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
 const config = require('./config')
+
+const initDB = require('./loaders/mongoose')
 
 const startServer = async () => {
   const app = express()
@@ -14,6 +15,8 @@ const startServer = async () => {
   app.use(require('./api/index'))
 
   const { port } = config
+
+  await initDB()
 
   try {
     require('./services/scheduler')

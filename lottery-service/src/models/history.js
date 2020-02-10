@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const { Schema } = mongoose
 
-const histroySchema = new Schema(
+const HistroySchema = new Schema(
   {
     lotteryName: {
       type: String,
@@ -19,4 +19,4 @@ const histroySchema = new Schema(
   }
 )
 
-mongoose.model('Histroy', histroySchema)
+module.exports = mongoose.model('Histroy', HistroySchema)
