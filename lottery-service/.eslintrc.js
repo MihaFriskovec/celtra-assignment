@@ -5,6 +5,7 @@ module.exports = {
     mongo: true,
     node: true
   },
+  plugins: ['jest'],
   parserOptions: {
     ecmaVersion: 9,
     impliedStrict: true,

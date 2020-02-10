@@ -1,5 +1,4 @@
 const logger = require('pino')()
-const scheduler = require('./scheduler')
 
 const History = require('../models/history')
 
@@ -16,17 +15,9 @@ const getLatestWinners = async lotteryName => {
   try {
     const latestWinners = await History.find(query).limit(5)
 
-    const latestWinnersData = latestWinners.toArray()
+    logger.info(`Latests winners ${JSON.stringify(latestWinners)}`)
 
-    logger.info(`Latests winners ${JSON.stringify(latestWinnersData)}`)
-    logger.info(`Next tick ${scheduler.getNextTick}`)
-
-    const data = {
-      data: latestWinnersData,
-      nextTick: scheduler.getNextTick()
-    }
-
-    return data
+    return latestWinners
   } catch (e) {
     logger.error(`Error getting latest winners ${e.message}`)
     throw new Error('Error getting latest winners')

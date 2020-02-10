@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const logger = require('pino')()
 
 const Lottery = require('../models/lotteries')
