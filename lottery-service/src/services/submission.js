@@ -1,16 +1,7 @@
 const logger = require('pino')()
-const redis = require('redis')
-
-const { promisify } = require('util')
 
 const lotteries = require('./lotteries')
-
-const client = redis.createClient({ host: 'redis' })
-
-const asyncPush = promisify(client.rpush).bind(client)
-const asyncList = promisify(client.lrange).bind(client)
-const asyncDelete = promisify(client.del).bind(client)
-const asyncExists = promisify(client.exists).bind(client)
+const redis = require('./redis')
 
 /**
  * Submit user to given lottery. Submission is handled trough REDIS.
@@ -26,7 +17,7 @@ const submit = async (user, number, lotteryName) => {
   const data = JSON.stringify({ user, number })
 
   try {
-    const result = await asyncPush(name, data)
+    const result = await redis.asyncPush(name, data)
 
     logger.info('Added item to list')
 
@@ -49,11 +40,11 @@ const getSubmission = async lotteryName => {
   const { name } = lottery
 
   try {
-    const exists = await asyncExists(name)
+    const exists = await redis.asyncExists(name)
 
     if (!exists) return []
 
-    const result = await asyncList(lottery, 0, -1)
+    const result = await redis.asyncList(lottery, 0, -1)
 
     logger.info('List items from list')
 
@@ -70,7 +61,7 @@ const getSubmission = async lotteryName => {
  */
 const clearSubmission = async lotteryName => {
   try {
-    const result = await asyncDelete(lotteryName)
+    const result = await redis.asyncDelete(lotteryName)
 
     logger.info('Removed items from list')
 

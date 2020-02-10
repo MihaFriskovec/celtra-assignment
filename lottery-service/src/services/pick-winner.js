@@ -14,6 +14,8 @@ const pickWinner = async () => {
 
   const { lotteryNumber } = lotteryApiResult
 
+  const result = []
+
   for (const activeLottery of activeLotteries) {
     logger.info(`Active lottery ${JSON.stringify(activeLottery)}`)
     const { lotteryName } = activeLottery
@@ -34,10 +36,12 @@ const pickWinner = async () => {
       lotteryNumber
     }
 
+    result.push(historyData)
+
     await history.setLatestWinners(historyData)
   }
 
-  return 'done'
+  return result
 }
 
 module.exports = pickWinner
