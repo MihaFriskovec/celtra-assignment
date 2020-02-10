@@ -6,22 +6,25 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "i": "^0.3.6",
     "jest": "^25.1.0",
     "mongoose": "^5.8.11",
     "node-schedule": "^1.3.2",
-    "npm": "^6.13.7",
+    "pino": "^5.16.0",
+    "redis": "^3.0.2",
     "request-promise-native": "^1.0.8"
   },
   "devDependencies": {
+    "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-jest": "^23.6.0",
     "nodemon": "^2.0.2",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "redis-mock": "^0.48.0"
   },
   "scripts": {
     "test": "jest",
+    "test-unit": "cross-env NODE_ENV=test jest -c config/jest/jest.config.unit.js",
     "livereload": "nodemon /src/app.js"
   },
   "author": "Miha Friškovec",

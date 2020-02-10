@@ -2,17 +2,16 @@ const mongoose = require('mongoose')
 
 const { Schema } = mongoose
 
-const entrySchema = new Schema(
+const histroySchema = new Schema(
   {
-    user: {
+    lotteryName: {
       type: String,
       required: true
     },
-    selectedNumber: {
+    users: [String],
+    winningNumber: {
       type: Number,
-      required: true,
-      min: 1,
-      max: 30
+      required: true
     }
   },
   {
@@ -20,4 +19,4 @@ const entrySchema = new Schema(
   }
 )
 
-module.exports = entrySchema
+mongoose.model('Histroy', histroySchema)

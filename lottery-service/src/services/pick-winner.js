@@ -1,13 +1,14 @@
 const lotteris = require('./lotteries')
 const drawNumber = require('./draw-number')
+const mongoose = require('mongoose')
+
+const LatestWinners = mongoose.model('LatestWinners')
 
 const pickWinner = async () => {
-  console.log('Picking winner')
   const lotteryApiResult = await drawNumber()
   const activeLotteries = lotteris.getLotteries()
 
   const { lotteryNumber } = lotteryApiResult
-  const results = []
 
   // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of activeLotteries.entries()) {
@@ -23,10 +24,10 @@ const pickWinner = async () => {
       winningNumber: lotteryNumber
     }
 
-    results.push(winner)
-  }
+    const doc = new LatestWinners(winner)
 
-  console.log(results)
+    doc.save()
+  }
 }
 
 module.exports = pickWinner

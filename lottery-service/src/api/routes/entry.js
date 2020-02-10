@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const addUserEntry = require('../../services/add-entry')
+const submission = require('../../services/submission')
 
 router.post('/:lotteryName', async (req, res) => {
   const {
@@ -7,7 +7,7 @@ router.post('/:lotteryName', async (req, res) => {
     body: { user, number }
   } = req
 
-  const entry = await addUserEntry(user, number, lotteryName)
+  const entry = await submission.submit(user, number, lotteryName)
 
   return res.json(entry)
 })

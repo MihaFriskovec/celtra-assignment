@@ -6,12 +6,16 @@ services:
     ports:
       - "27017:27017"
 
+  redis:
+    image: redis:alpine
+
   lotterysevice:
     build: ./lottery-service/
     ports:
       - "8081:8081"
     depends_on:
       - mongodb
+      - redis
 
   web:
     build: ./web/
