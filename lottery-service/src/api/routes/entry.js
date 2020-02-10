@@ -1,8 +1,13 @@
 const router = require('express').Router()
 const addUserEntry = require('../../services/add-entry')
 
-router.post('/', async (req, res) => {
-  const entry = await addUserEntry(req.body)
+router.post('/:lotteryName', async (req, res) => {
+  const {
+    params: { lotteryName },
+    body: { user, number }
+  } = req
+
+  const entry = await addUserEntry(user, number, lotteryName)
 
   return res.json(entry)
 })

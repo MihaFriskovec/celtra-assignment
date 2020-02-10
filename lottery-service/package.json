@@ -14,13 +14,15 @@
     "request-promise-native": "^1.0.8"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-jest": "^23.6.0",
-    "eslint": "^6.8.0",
+    "nodemon": "^2.0.2",
     "prettier": "^1.19.1"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "livereload": "nodemon /src/app.js"
   },
   "author": "Miha Friškovec",
   "license": "ISC"

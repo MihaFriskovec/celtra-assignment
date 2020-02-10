@@ -1,13 +1,23 @@
-const activeLotteris = new Set()
+const activeLotteris = new Map()
+
+activeLotteris.set('test', [])
 
 const addLoterry = lotteryName => {
-  if (activeLotteris.has(lotteryName)) return activeLotteris
+  if (activeLotteris.has(lotteryName)) {
+    return {
+      status: 'Lottery already exists'
+    }
+  }
 
-  activeLotteris.add(lotteryName)
+  activeLotteris.set(lotteryName, [])
 
-  return activeLotteris
+  return {
+    status: 'Created'
+  }
 }
 
 const getLotteries = () => activeLotteris
 
-module.exports = { addLoterry, getLotteries }
+const getLottery = lotteryName => activeLotteris.get(lotteryName)
+
+module.exports = { addLoterry, getLotteries, getLottery }

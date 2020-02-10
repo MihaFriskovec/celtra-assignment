@@ -13,11 +13,14 @@ const startServer = async () => {
 
   app.use(require('./api/index'))
 
+  const { port } = config
+
   try {
-    await app.listen(config.port)
-    console.log('Server started')
+    require('./services/scheduler')
+    await app.listen(port)
+    console.log(`Server started on port ${port}`)
   } catch (e) {
-    console.log('Error starting server on port: ', config.port)
+    console.log(`Error starting server on port ${port}`)
   }
 }
 

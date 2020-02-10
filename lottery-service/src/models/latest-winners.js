@@ -4,8 +4,15 @@ const { Schema } = mongoose
 
 const latestWinnersSchema = new Schema(
   {
-    users: [],
-    winningNumber: Number
+    lotteryName: {
+      type: String,
+      required: true
+    },
+    users: [String],
+    winningNumber: {
+      type: Number,
+      required: true
+    }
   },
   {
     timestamps: true
