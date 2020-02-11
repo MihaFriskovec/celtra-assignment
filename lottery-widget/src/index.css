@@ -1,16 +1,38 @@
-.lw-row {
-  display: flex;
-  justify-content: center;
-}
-
-.lw-column {
-}
-
-.lw-container {
-  padding: 16px;
+.lw-main {
+  width: 600px;
   border: 1px solid #eee;
+  padding: 16px;
 }
 
 .lw-countdown {
+  text-align: center;
   font-size: 1.4rem;
+}
+
+.lw-content {
+  margin-top: 16px;
+}
+
+.lw-history {
+  display: inline-block;
+  width: 250px;
+  height: 100px;
+  border: 1px solid #eee;
+}
+
+.lw-form {
+  display: inline-block;
+  width: 250px;
+}
+
+.lw-input-group {
+  margin: 8px;
+}
+
+.lw-input {
+  border: none;
+  border-bottom: 2px soild #eee;
+  padding: 4px;
+  font-size: 1rem;
+  display: inline;
 }

@@ -9,10 +9,14 @@ const history = require('./history')
  * Pick winner for each active lottery and save result to histroy collection.
  */
 const pickWinner = async () => {
+  logger.info('Picking new winners')
   const lotteryApiResult = await drawNumber()
   const activeLotteries = await lotteris.getActiveLotteries()
+  logger.info(`Active lotteris ${activeLotteries}`)
 
   const { lotteryNumber } = lotteryApiResult
+
+  logger.info(`Winning number: ${lotteryNumber}`)
 
   const result = []
 

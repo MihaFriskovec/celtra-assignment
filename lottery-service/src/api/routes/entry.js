@@ -7,9 +7,13 @@ router.post('/:lotteryName', async (req, res) => {
     body: { user, number }
   } = req
 
-  const entry = await submission.submit(user, number, lotteryName)
+  try {
+    const entry = await submission.submit(user, number, lotteryName)
 
-  return res.json(entry)
+    return res.json(entry)
+  } catch (e) {
+    return res.status(500).json({ error: e.message })
+  }
 })
 
 module.exports = router
