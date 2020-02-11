@@ -14,6 +14,14 @@ const startServer = async () => {
 
   app.use(require('./api/index'))
 
+  app.use((err, req, res, next) => {
+    const error = {
+      path: req.path,
+      timestamp: new Date()
+    }
+    res.status(500).json(error)
+  })
+
   const { port } = config
 
   await initDB()

@@ -15,24 +15,52 @@
 
 .lw-history {
   display: inline-block;
-  width: 250px;
+  width: 260px;
   height: 100px;
   border: 1px solid #eee;
+  overflow-y: auto;
+  padding: 16px;
 }
 
 .lw-form {
   display: inline-block;
-  width: 250px;
+  height: 100px;
+  width: 260px;
+  padding: 16px;
 }
 
 .lw-input-group {
   margin: 8px;
 }
 
+.lw-input-item {
+  display: inline-block;
+}
+
 .lw-input {
   border: none;
-  border-bottom: 2px soild #eee;
+  border-bottom: 2px solid #ddd;
   padding: 4px;
   font-size: 1rem;
-  display: inline;
+  outline: none;
+  width: 90px;
+  margin: 8px;
+}
+
+.lw-history-list-item {
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.lw-list-number {
+  float: right;
+}
+
+.lw-history-text {
+  margin: 0 8px 0 8px;
+}
+
+.lw-input-item {
+  display: inline-block;
 }

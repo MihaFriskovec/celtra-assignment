@@ -6,9 +6,11 @@ router.get('/:lotteryName', async (req, res) => {
     params: { lotteryName }
   } = req
 
-  const winners = await history.getLatestWinners(lotteryName)
+  try {
+    const winners = await history.getLatestWinners(lotteryName)
 
-  return res.json(winners)
+    return res.json(winners)
+  } catch (e) {}
 })
 
 module.exports = router
