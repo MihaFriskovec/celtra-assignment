@@ -1,32 +1,36 @@
 .lw-main {
-  width: 600px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  width: 660px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   border: 1px solid #eee;
-  padding: 16px;
 }
 
 .lw-countdown {
   text-align: center;
+  padding: 16px;
   font-size: 1.4rem;
 }
 
 .lw-content {
-  margin-top: 16px;
+  display: inline-block;
+  width: 100%;
 }
 
 .lw-history {
-  display: inline-block;
-  width: 260px;
-  height: 100px;
-  border: 1px solid #eee;
+  width: 50%;
+  float: left;
+  height: 120px;
   overflow-y: auto;
-  padding: 16px;
 }
 
 .lw-form {
-  display: inline-block;
-  height: 100px;
-  width: 260px;
-  padding: 16px;
+  width: 50%;
+  float: right;
+  height: 120px;
+  text-align: center;
 }
 
 .lw-input-group {
@@ -34,23 +38,33 @@
 }
 
 .lw-input-item {
-  display: inline-block;
+  width: 50%;
 }
 
 .lw-input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   border: none;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 4px;
   font-size: 1rem;
+  background-color: transparent;
   outline: none;
-  width: 90px;
-  margin: 8px;
+  width: 80%;
+}
+
+.lw-history-list {
+  overflow-y: auto;
+  height: 110px;
+  border: 1px solid #eee;
+  margin-left: 16px;
 }
 
 .lw-history-list-item {
-  padding-bottom: 8px;
-  margin-bottom: 8px;
+  margin: 8px;
   border-bottom: 1px solid #ddd;
+  padding: 4px;
 }
 
 .lw-list-number {
@@ -63,4 +77,24 @@
 
 .lw-input-item {
   display: inline-block;
+}
+
+.lw-button {
+  padding: 12px 32px 12px 32px;
+  background-color: #fefefe;
+  outline: none;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  font-weight: 500;
+  color: #333;
+}
+
+.submit:hover {
+  background-color: #f2f2f2;
+}
+
+.submit:active {
+  background-color: #ddd;
 }
