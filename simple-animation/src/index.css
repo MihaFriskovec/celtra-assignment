@@ -1,0 +1,24 @@
+.sa-box {
+  height: 100px;
+  width: 100px;
+  background-color: #333;
+  position: absolute;
+}
+
+.sa-button-wrap {
+  margin-top: 32px;
+  text-align: center;
+  position: relative;
+  top: 200px;
+}
+
+.sa-button {
+  padding: 16px 48px 16px 48px;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.sa-button:active {
+  background-color: #ddd;
+}
