@@ -1,4 +1,6 @@
 const Lottery = require('../models/lotteries')
+const History = require('../models/history')
+// const db = require('../loaders/mongoose')
 
 const lotteries = [
   {
@@ -10,8 +12,11 @@ const lotteries = [
     active: false
   }
 ]
+module.exports = async () => {
+  await Lottery.deleteMany({})
+  await History.deleteMany({})
+  // await db()
+  const inserted = await Lottery.insertMany(lotteries)
 
-console.log('SEED')
-Lottery.create(lotteries, (err, res) => {
-  console.log(err, res)
-})
+  console.log(inserted)
+}

@@ -32,6 +32,8 @@ const getActiveLotteries = async () => {
   try {
     const activeLotteries = await Lottery.find({ active: true })
 
+    console.log(activeLotteries)
+
     return activeLotteries
   } catch (e) {
     logger.error(`Error getting active lotteris ${e.message}`)
@@ -47,6 +49,10 @@ const getActiveLotteries = async () => {
  *
  */
 const getLottery = async lotteryName => {
+  if (typeof lotteryName === 'undefined') {
+    throw new Error('Error getting lottery')
+  }
+
   try {
     const lottery = await Lottery.findOne({ name: lotteryName })
 

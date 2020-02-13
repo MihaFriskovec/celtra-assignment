@@ -13,7 +13,9 @@ const getLatestWinners = async lotteryName => {
   }
 
   try {
-    const latestWinners = await History.find(query).limit(5)
+    const latestWinners = await History.find(query)
+      .limit(5)
+      .sort({ _id: -1 })
 
     logger.info(`Latests winners ${JSON.stringify(latestWinners)}`)
 
@@ -31,6 +33,8 @@ const getLatestWinners = async lotteryName => {
  */
 const setLatestWinners = async data => {
   const history = new History(data)
+
+  console.log(history)
 
   try {
     const result = await history.save()

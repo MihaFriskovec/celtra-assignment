@@ -10,7 +10,7 @@ const getNextTick = () => {
   const halfMinuteTick = jobHalfMinute.nextInvocation().getTime()
   const fullMinuteTick = jobFullMinute.nextInvocation().getTime()
 
-  return Math.min([halfMinuteTick, fullMinuteTick])
+  return Math.min(halfMinuteTick, fullMinuteTick)
 }
 
 module.exports = { getNextTick }

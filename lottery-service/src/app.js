@@ -1,9 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const config = require('./config')
 
 const initDB = require('./loaders/mongoose')
+
+const seed = require('./db/seed')
 
 const startServer = async () => {
   const app = express()
@@ -11,6 +14,8 @@ const startServer = async () => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
   app.use(express.static(`${__dirname}/public`))
+
+  app.use(cors())
 
   app.use(require('./api/index'))
 
@@ -24,9 +29,10 @@ const startServer = async () => {
 
   const { port } = config
 
-  await initDB()
-
   try {
+    await initDB()
+    await seed()
+
     require('./services/scheduler')
     await app.listen(port)
     console.log(`Server started on port ${port}`)

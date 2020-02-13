@@ -1,15 +1,16 @@
 (function() {
-  var submitUrl = encodeURI("http://localhost:8081/api/entries");
-  var drawUrl = encodeURI("http://localhost:8081/api/history");
-
   var placeholder = document.getElementById("lottery-widget");
   if (!placeholder) throw new Error("Placeholder not found");
+
+  var lotteryName = placeholder.dataset.lotteryName;
+  var submitUrl = encodeURI(placeholder.dataset.submitUrl + "/" + lotteryName);
+  var drawUrl = encodeURI(placeholder.dataset.drawUrl + "/" + lotteryName);
 
   main();
 
   function buildList(data) {
     try {
-      var winners = JSON.parse(data).data;
+      var winners = JSON.parse(data).winners;
 
       var historyList = document.getElementById("history");
 
@@ -23,6 +24,14 @@
 
       historyList.appendChild(list);
 
+      if (winners.length === 0) {
+        var noData = document.createElement("p");
+        noData.innerText = "No data yet.";
+        noData.setAttribute("style", "text-align: center");
+
+        list.appendChild(noData);
+      }
+
       for (var i = 0; i < winners.length; i++) {
         var winner = winners[i];
 
@@ -34,15 +43,15 @@
 
         itemP.innerText = winner.users.join(", ");
 
+        if (winner.users.length === 0) {
+          itemP.innerText = "No lucky contestants.";
+        }
+
         var winningNumberSpan = document.createElement("span");
         winningNumberSpan.setAttribute("class", "lw-list-number");
         winningNumberSpan.innerText = "# " + Number(winner.winningNumber);
 
         itemP.appendChild(winningNumberSpan);
-
-        if (winner.hasWinner === false) {
-          itemP.innerText = "No lucky contestants.";
-        }
 
         listItem.appendChild(itemP);
 
@@ -63,8 +72,10 @@
         console.log(xmlHttp.responseText);
       }
     };
+
     xmlHttp.open("POST", submitUrl, true);
-    xmlHttp.send({ user: name, number: number });
+    xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xmlHttp.send(JSON.stringify({ user: name, number: number }));
   }
 
   function buildSceleton() {
@@ -147,7 +158,7 @@
   }
 
   function startTime(timeout) {
-    var seconds = Math.round(Math.floor(timeout / 1000)) + 1;
+    var seconds = Math.round(Math.floor(timeout / 1000));
 
     var interval = setInterval(function() {
       seconds--;
@@ -167,43 +178,43 @@
     var nextTick = JSON.parse(data).nextTick;
     var currentTime = new Date().getTime();
 
-    var timeout = nextTick - currentTime + 200; // Add 200ms wait before making request
+    var timeout = nextTick - currentTime + 1000; // Add 1s wait before making request
 
     startTime(timeout);
   }
 
   function draw() {
-    // var xmlHttp = new XMLHttpRequest();
-    // xmlHttp.onreadystatechange = function() {
-    //   if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-    //     buildList(xmlHttp.responseText);
-    //     calculateNextTick(xmlHttp.responseText);
-    //   }
-    // };
-    // xmlHttp.open("GET", drawUrl, true);
-    // xmlHttp.send(null);
-    buildList(
-      JSON.stringify({
-        nextTick: new Date().getTime() + 2000,
-        data: [
-          { users: ["Miha"], hasWinner: true, winningNumber: 10 },
-          { users: ["Miha"], hasWinner: true, winningNumber: 10 },
-          { users: ["Miha"], hasWinner: true, winningNumber: 10 },
-          { users: [], hasWinner: false, winningNumber: 10 }
-        ]
-      })
-    );
-    calculateNextTick(
-      JSON.stringify({
-        nextTick: new Date().getTime() + 200000,
-        data: [
-          { users: ["Miha"], hasWinner: true, winningNumber: 10 },
-          { users: ["Miha"], hasWinner: true, winningNumber: 10 },
-          { users: ["Miha"], hasWinner: true, winningNumber: 10 },
-          { users: [], hasWinner: false, winningNumber: 10 }
-        ]
-      })
-    );
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        buildList(xmlHttp.responseText);
+        calculateNextTick(xmlHttp.responseText);
+      }
+    };
+    xmlHttp.open("GET", drawUrl, true);
+    xmlHttp.send(null);
+    // buildList(
+    //   JSON.stringify({
+    //     nextTick: new Date().getTime() + 2000,
+    //     data: [
+    //       { users: ["Miha"], hasWinner: true, winningNumber: 10 },
+    //       { users: ["Miha"], hasWinner: true, winningNumber: 10 },
+    //       { users: ["Miha"], hasWinner: true, winningNumber: 10 },
+    //       { users: [], hasWinner: false, winningNumber: 10 }
+    //     ]
+    //   })
+    // );
+    // calculateNextTick(
+    //   JSON.stringify({
+    //     nextTick: new Date().getTime() + 200000,
+    //     data: [
+    //       { users: ["Miha"], hasWinner: true, winningNumber: 10 },
+    //       { users: ["Miha"], hasWinner: true, winningNumber: 10 },
+    //       { users: ["Miha"], hasWinner: true, winningNumber: 10 },
+    //       { users: [], hasWinner: false, winningNumber: 10 }
+    //     ]
+    //   })
+    // );
   }
 
   function main() {

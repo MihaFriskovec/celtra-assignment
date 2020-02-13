@@ -14,7 +14,7 @@ const submit = async (user, number, lotteryName) => {
 
   const { name } = lottery
 
-  const data = JSON.stringify({ user, number })
+  const data = `${user}:${number}`
 
   try {
     const result = await redis.asyncPush(name, data)
@@ -35,16 +35,14 @@ const submit = async (user, number, lotteryName) => {
  * @throws Throws error if there is an error reading submissions from REDIS
  */
 const getSubmission = async lotteryName => {
-  const lottery = lotteries.getLottery(lotteryName)
-
-  const { name } = lottery
+  if (!lotteryName) return []
 
   try {
-    const exists = await redis.asyncExists(name)
+    const exists = await redis.asyncExists(lotteryName)
 
     if (!exists) return []
 
-    const result = await redis.asyncList(lottery, 0, -1)
+    const result = await redis.asyncList(lotteryName, 0, -1)
 
     logger.info('List items from list')
 

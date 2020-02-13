@@ -12,32 +12,33 @@ const pickWinner = async () => {
   logger.info('Picking new winners')
   const lotteryApiResult = await drawNumber()
   const activeLotteries = await lotteris.getActiveLotteries()
-  logger.info(`Active lotteris ${activeLotteries}`)
 
-  const { lotteryNumber } = lotteryApiResult
+  let { lotteryNumber } = lotteryApiResult
 
   logger.info(`Winning number: ${lotteryNumber}`)
 
+  lotteryNumber = 10
+
   const result = []
 
-  for (const activeLottery of activeLotteries) {
-    logger.info(`Active lottery ${JSON.stringify(activeLottery)}`)
-    const { lotteryName } = activeLottery
+  for (let i = 0; i < activeLotteries.length; i++) {
+    const activeLottery = activeLotteries[i]
+    // for (const activeLottery of activeLotteries) {
+    const { name: lotteryName } = activeLottery
 
     const users = await submission.getSubmission(lotteryName)
     await submission.clearSubmission(lotteryName)
 
-    logger.info(`Users submited ${users}`)
     const winners = users
-      .filter(entry => JSON.parse(entry).number === lotteryNumber)
-      .map(user => JSON.parse(user).user)
+      .filter(entry => Number(entry.split(':')[1]) === lotteryNumber)
+      .map(user => user.split(':')[0])
 
     logger.info(`Winners ${winners}`)
 
     const historyData = {
       lotteryName,
-      winners,
-      lotteryNumber
+      users: winners,
+      winningNumber: lotteryNumber
     }
 
     result.push(historyData)
