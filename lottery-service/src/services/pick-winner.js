@@ -13,11 +13,9 @@ const pickWinner = async () => {
   const lotteryApiResult = await drawNumber()
   const activeLotteries = await lotteris.getActiveLotteries()
 
-  let { lotteryNumber } = lotteryApiResult
+  const { lotteryNumber } = lotteryApiResult
 
   logger.info(`Winning number: ${lotteryNumber}`)
-
-  lotteryNumber = 10
 
   const result = []
 

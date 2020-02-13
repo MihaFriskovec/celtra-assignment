@@ -1,17 +1,21 @@
 .lw-main {
   font-family: Arial, Helvetica, sans-serif;
-  color: #333;
-  width: 660px;
+  color: #616161;
+  max-width: 660px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border: 1px solid #eee;
+  box-shadow: 1px 4px 16px #eee;
 }
 
 .lw-countdown {
   text-align: center;
   padding: 16px;
   font-size: 1.4rem;
+  background-color: rgb(205, 220, 57);
+  color: #fff;
+  margin-bottom: 16px;
 }
 
 .lw-content {
@@ -81,14 +85,14 @@
 
 .lw-button {
   padding: 12px 32px 12px 32px;
-  background-color: #fefefe;
+  background-color: transparent;
   outline: none;
   text-transform: uppercase;
   font-size: 0.8rem;
-  margin-top: 8px;
-  border: 1px solid #ddd;
+  margin-top: 16px;
+  border: 1px solid rgb(205, 220, 57);
   font-weight: 500;
-  color: #333;
+  color: #5a9216;
 }
 
 .submit:hover {
@@ -99,13 +103,15 @@
   background-color: #ddd;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 500px) {
   .lw-main {
     width: 100%;
+    position: relative;
   }
 
   .lw-history {
     width: 100%;
+    height: auto;
   }
 
   .lw-history-list {
@@ -113,8 +119,9 @@
   }
 
   .lw-form {
-    display: none;
     width: 100%;
-    margin: 16px;
+    float: left;
+    height: auto;
+    margin-bottom: 16px;
   }
 }
