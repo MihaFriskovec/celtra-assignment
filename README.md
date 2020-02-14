@@ -19,7 +19,15 @@ The command will do the following:
 3. Build and start lottery backend service on port 8081 (NOTE: at each start Mongo data is droped)
 4. Start lottery web app using nginx on port 8080
 5. Start animation web app using nginx on port 8082
-6. Start widget service
+6. Start widget service and serve static js file on port 8083
+*** NOTE ***
+On you local machine the following ports should not be in use:
+- 27017
+- 6379
+- 8080
+- 8081
+- 8082
+- 8083
 
 ## Assignment result
 
