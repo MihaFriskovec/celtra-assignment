@@ -21,7 +21,7 @@ The command will do the following:
 5. Start animation web app using nginx on port 8082
 6. Start widget service and serve static js file on port 8083
 
-** NOTE **
+**NOTE**
 
 On you local machine the following ports should not be in use:
 - 27017
