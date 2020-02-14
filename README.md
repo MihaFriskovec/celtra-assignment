@@ -23,7 +23,7 @@ The command will do the following:
 
 **NOTE**
 
-On you local machine the following ports should not be in use:
+On you local machine the following ports should not be in use since they will be useed by the service
 - 27017
 - 6379
 - 8080
